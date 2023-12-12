@@ -12,7 +12,7 @@ const { NotImplementedError } = require('../extensions/index.js');
  * stack.pop(); // undefined
  *
  */
-class stackElem {
+class StackElem {
   constructor(value) {
     this.value = value;
     this.next = null;
@@ -26,7 +26,7 @@ class Stack {
   }
 
   push(name) {
-    const newElem = new stackElem(name);
+    const newElem = new StackElem(name);
 
     if(!this.top) {
       this.top = newElem;
