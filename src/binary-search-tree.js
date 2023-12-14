@@ -102,28 +102,88 @@ class BinarySearchTree {
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    if (!this.has(data)) {
+      return null;
+    } else if (!this.rootNode) {
+      return null;
+    }
+
+    this.rootNode = removeNodeFromTree(this.rootNode, data);
+
+    function removeNodeFromTree(current, data) {
+      if (!current) {
+         return null;
+      }
+
+      if (data < current.data) {
+        current.left = removeNodeFromTree(current.left, data);
+        return current;
+      } else if(data > current.data) {
+        current.right = removeNodeFromTree(current.right, data);
+        return current;
+      } else if (current.data === data){
+          if (!current.left & !current.right) {
+            return null;
+          } else if (!current.left) {
+            current = current.right;
+            return current;
+          } else if (!current.right) {
+            current = current.left;
+            return current;
+          }
+
+          let min = current.right;
+          while (min.left) {
+            min = min.left;
+          }
+          current.data = min.data;
+          current.right = removeNodeFromTree(current.right, min.data);
+
+          return current;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootNode) {
+      return null;
+    } else if (!this.rootNode.left) {
+      return this.rootNode.data;
+    }
+
+    let min = this.rootNode;
+    while(min.left) {
+      min = min.left
+    }
+
+    return min.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootNode) {
+      return null;
+    } else if (!this.rootNode.right) {
+      return this.rootNode.data;
+    }
+
+    let max = this.rootNode;
+    while(max.right) {
+        max = max.right;
+    }
+
+    return max.data;
   }
 }
 
-const myTree = new BinarySearchTree();
-myTree.add(10);
-myTree.add(6);
-myTree.add(15);
-myTree.add(9);
-console.log(myTree.add(5))
+// const myTree = new BinarySearchTree();
+// myTree.add(10);
+// myTree.add(6);
+// myTree.add(15);
+// myTree.add(9);
+// myTree.add(5);
+// myTree.add(3);
+// console.log(myTree.min())
 
 module.exports = {
   BinarySearchTree
